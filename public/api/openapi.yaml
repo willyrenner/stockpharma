@@ -1,0 +1,128 @@
+openapi: '3.0.1'
+info:
+  title: Cadastro de Medicamentos
+  description: >
+    Gerenciador de estoque de medicamentos em farmacia.
+  version: '0.1'
+servers:
+  - url: http://{host}:{porta}/api
+    variables:
+      host:
+        default: localhost
+      porta:
+        default: '8000'
+paths:
+  /medicamentos:
+    get:
+      summary: Listar medicamentos
+      responses:
+        200:
+          description: Lista de medicamentos
+    
+    post:
+      summary: Criar um medicamento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: Nome do medicamento.
+                  example: Dipirona
+                laboratorio:
+                  type: string
+                  description: Nome do laboratório responsável.
+                  example: Teuto
+                fornecedor:
+                  type: string
+                  description: Nome do fornecedor.
+                  example: Drogaria Center Cruzeta
+                unidade_medida:
+                  type: string
+                  description: Unidade de medida do medicamento em miligramas.
+                  example: 1000mg
+      responses:
+        201:
+          description: Medicamento criado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: URI do novo recurso criado.
+        400:
+          description: Requisição inválida
+    
+  /medicamentos/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Obter um medicamento
+      responses:
+        200:
+          description: Medicamento encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  nome:
+                    type: string
+                  laboratorio:
+                    type: string
+                  fornecedor:
+                    type: string
+                  unidade_medida:
+                    type: string
+        404:
+          description: Não encontrado.
+          
+    delete:
+      summary: Apagar um medicamento
+      responses:
+        200:
+          description: Medicamento apagado
+        404:
+          description: Não encontrado.
+      
+    put:
+      summary: Atualizar um medicamento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: Nome do medicamento.
+                  example: Rivotril
+                laboratorio:
+                  type: string
+                  description: Nome do laboratório responsável.
+                  example: Biopas
+                fornecedor:
+                  type: string
+                  description: Nome do fornecedor.
+                  example: Drogaria Center Cruzeta
+                unidade_medida:
+                  type: string
+                  description: Unidade de medida do medicamento em miligramas.
+                  example: 2,5mg
+      responses:
+        200:
+          description: Medicamento atualizado
+        404:
+          description: Não encontrado.
