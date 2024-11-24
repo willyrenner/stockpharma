@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Medicamento extends Model
 {
     use HasFactory;
-
+    public $timestamps = true;
     protected $fillable = [
-        'nome', 'laboratorio', 'fornecedor', 'unidade_medida'
+        'nome', 'comprimidos', 'unidade_medida'
     ];
 }

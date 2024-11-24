@@ -18,8 +18,7 @@ return new class extends Migration
             $table->timestamps();
             
             $table->string('nome');
-            $table->string('laboratorio');
-            $table->string('fornecedor');
+            $table->string('comprimidos');
             $table->string('unidade_medida');
         });
     }
