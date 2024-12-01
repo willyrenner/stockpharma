@@ -3,7 +3,7 @@ info:
   title: Cadastro de Medicamentos
   description: >
     Gerenciador de estoque de medicamentos em farmacia.
-  version: '0.2'
+  version: '0.1'
 servers:
   - url: http://{host}:{porta}/api
     variables:
@@ -32,10 +32,14 @@ paths:
                   type: string
                   description: Nome do medicamento.
                   example: Dipirona
-                comprimidos:
+                laboratorio:
                   type: string
-                  description: Quantidade de comprimidos
-                  example: 30
+                  description: Nome do laboratório responsável.
+                  example: Teuto
+                fornecedor:
+                  type: string
+                  description: Nome do fornecedor.
+                  example: Drogaria Center Cruzeta
                 unidade_medida:
                   type: string
                   description: Unidade de medida do medicamento em miligramas.
@@ -105,10 +109,14 @@ paths:
                   type: string
                   description: Nome do medicamento.
                   example: Rivotril
-                comprimidos:
+                laboratorio:
                   type: string
-                  description: Quantidade de comprimidos
-                  example: 30
+                  description: Nome do laboratório responsável.
+                  example: Biopas
+                fornecedor:
+                  type: string
+                  description: Nome do fornecedor.
+                  example: Drogaria Center Cruzeta
                 unidade_medida:
                   type: string
                   description: Unidade de medida do medicamento em miligramas.
@@ -118,72 +126,3 @@ paths:
           description: Medicamento atualizado
         404:
           description: Não encontrado.
-
-  /relatorios:
-    get:
-      summary: Gerar relatório de medicamentos
-      parameters:
-        - name: tipo
-          in: query
-          description: Tipo de relatório (diário, semanal, mensal ou intervalo personalizado).
-          required: true
-          schema:
-            type: string
-            enum:
-              - diario
-              - semanal
-              - mensal
-              - intervalo
-        - name: data_inicio
-          in: query
-          description: Data de início do intervalo (obrigatório para tipo "intervalo").
-          required: false
-          schema:
-            type: string
-            format: date
-            example: 2024-01-01
-        - name: data_fim
-          in: query
-          description: Data de término do intervalo (obrigatório para tipo "intervalo").
-          required: false
-          schema:
-            type: string
-            format: date
-            example: 2024-01-31
-      responses:
-        200:
-          description: Relatório gerado com sucesso
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  tipo:
-                    type: string
-                    description: Tipo de relatório gerado.
-                  periodo:
-                    type: object
-                    properties:
-                      inicio:
-                        type: string
-                        format: date
-                        description: Data de início do período.
-                      fim:
-                        type: string
-                        format: date
-                        description: Data de fim do período.
-                  medicamentos:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        nome:
-                          type: string
-                        quantidade_total:
-                          type: integer
-                        unidade_medida:
-                          type: string
-        400:
-          description: "Requisição inválida (ex.: parâmetros ausentes ou tipo inválido)."
