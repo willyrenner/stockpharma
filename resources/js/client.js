@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 class Token {
   constructor(value, expirationTimeInSeconds, scope) {
     this.value = value || Cookies.get('suapToken');
@@ -73,6 +74,14 @@ class SuapClient {
 
   getLoginURL() {
     return `${this.authorizationURL}?response_type=${this.responseType}&grant_type=${this.grantType}&client_id=${this.clientID}&scope=${this.scope}&redirect_uri=${this.redirectURI}`;
+  }
+
+  isAuthenticated() {
+    return this.token !== undefined && this.token !== null;
+  }
+
+  getToken() {
+    return this.tokenValue || this.token.getValue();  // Retorna o token armazenado ou o valor do token
   }
 
   login() {

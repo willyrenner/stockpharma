@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { SuapClient } from "@/client";
+// import Cookies from "js-cookie";
 
 const Loggedin = () => {
     const [settings, setSettings] = useState(null);
