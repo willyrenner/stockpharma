@@ -32,6 +32,7 @@ class MedicamentoController extends Controller
         $medida = $request->input('medida');
         $quantidade = $request->input('quantidade');
         $miligramas = $request->input('miligramas');
+        $tarja = $request->input('tarja');
         
         $medicamento = Medicamento::create([
             'nome' => $nome,
@@ -39,7 +40,8 @@ class MedicamentoController extends Controller
             'fornecedor' => $fornecedor,
             'medida' => $medida,
             'quantidade' => $quantidade,
-            'miligramas' => $miligramas
+            'miligramas' => $miligramas,
+            'tarja' => $tarja
         ]);
         
         $id = $medicamento->id;
@@ -69,7 +71,7 @@ class MedicamentoController extends Controller
      */
     public function update(Request $request, Medicamento $medicamento)
     {
-        $medicamento->update($request->only(['nome', 'laboratorio', 'fornecedor', 'unidade_medida']));
+        $medicamento->update($request->only(['nome', 'laboratorio', 'fornecedor', 'medida', 'quantidade', 'miligramas', 'tarja']));
     }
 
     /**

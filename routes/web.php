@@ -44,11 +44,11 @@ Route::get('/tarjaAmarela', function () {
 })->name('tarjaAmarela');
 
 Route::get('/tarjaVermelha', function () {
-    return Inertia::render('Screens/tarjaVermelha');
+    return Inertia::render('Screens/TarjaVermelha');
 })->name('tarjaVermelha');
 
 Route::get('/tarjaPreta', function () {
-    return Inertia::render('Screens/tarjaPreta');
+    return Inertia::render('Screens/TarjaPreta');
 })->name('tarjaPreta');
 
 

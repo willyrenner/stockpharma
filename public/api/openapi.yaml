@@ -37,8 +37,10 @@ paths:
                       type: string
                     quantidade:
                       type: integer
-                    mg:
+                    miligramas:
                       type: integer
+                    tarja:
+                      type: string
     
     post:
       summary: Criar um medicamento
@@ -69,10 +71,14 @@ paths:
                   type: integer
                   description: Quantidade de unidades na medida.
                   example: 20
-                mg:
+                miligramas:
                   type: integer
                   description: Quantidade em miligramas por unidade.
                   example: 500
+                tarja:
+                  type: string
+                  description: Tarja do médicamento.
+                  example: Preta
       responses:
         201:
           description: Medicamento criado
@@ -116,8 +122,10 @@ paths:
                     type: string
                   quantidade:
                     type: integer
-                  mg:
+                  miligramas:
                     type: integer
+                  tarja:
+                    type: string
         404:
           description: Não encontrado.
           
@@ -158,10 +166,14 @@ paths:
                   type: integer
                   description: Quantidade de unidades na medida.
                   example: 15
-                mg:
+                miligramas:
                   type: integer
                   description: Quantidade em miligramas por unidade.
                   example: 2.5
+                tarja:
+                  type: string
+                  description: Tarja do médicamento.
+                  example: Preta
       responses:
         200:
           description: Medicamento atualizado

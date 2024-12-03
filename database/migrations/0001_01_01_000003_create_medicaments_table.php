@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('medida');
             $table->string('quantidade');
             $table->string('miligramas');
+            $table->string('tarja');
         });
     }
 
