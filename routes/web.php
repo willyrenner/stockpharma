@@ -4,9 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\MedicamentoController;
 
-Route::apiResource('medicamentos', MedicamentoController::class);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -19,7 +17,44 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
+
+Route::get('/loggedin', function () {
+    return Inertia::render('Loggedin');
+})->name('loggedin');
+
+Route::get('/cadastrarremedios', function () {
+    return Inertia::render('Screens/CadastrarRemedios');
+})->name('cadastrarremedios');
+
+Route::get('/relatorioPedidos', function () {
+    return Inertia::render('Screens/relatorioPedidos');
+})->name('relatorioPedidos');
+
+Route::get('/remediosEstoque', function () {
+    return Inertia::render('Screens/remediosEstoque');
+})->name('remediosEstoque');
+
+Route::get('/removerRemedio', function () {
+    return Inertia::render('Screens/removerRemedio');
+})->name('removerRemedio');
+
+Route::get('/tarjaAmarela', function () {
+    return Inertia::render('Screens/TarjaAmarela');
+})->name('tarjaAmarela');
+
+Route::get('/tarjaVermelha', function () {
+    return Inertia::render('Screens/tarjaVermelha');
+})->name('tarjaVermelha');
+
+Route::get('/tarjaPreta', function () {
+    return Inertia::render('Screens/tarjaPreta');
+})->name('tarjaPreta');
+
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

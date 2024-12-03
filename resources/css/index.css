@@ -1,0 +1,297 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #161b22;
+  color: white;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.welcome-container button {
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #238636;
+  color: white;
+}
+
+.welcome-container button:hover {
+  background-color: #2ea043;
+}
+
+.dashboard-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.dashboard-buttons button {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #238636;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.dashboard-buttons button:hover {
+  background-color: #2ea043;
+}
+
+.cadastrar-remedios-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.cadastrar-remedios-container .categories {
+  display: flex;
+  gap: 20px;
+}
+
+.card {
+  background-color: #1c1f26;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+}
+
+.card h2 {
+  margin: 10px 0;
+}
+
+button {
+  background-color: #238636;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #2ea043;
+}
+
+button:active {
+  background-color: #1a772e;
+}
+
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #2ea043;
+  background-color: #1c1f26;
+  color: white;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border: 2px solid #238636;
+  outline: none;
+}
+
+.auth-container {
+  background-color: #1c1f26;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+}
+
+.auth-container h1 {
+  font-size: 24px;
+  color: white;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.auth-container button {
+  margin-top: 10px;
+}
+.auth-container .button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.auth-container .button-group button {
+  width: 100px;
+}
+
+.auth-container button:hover {
+  background-color: #1a5b2e;
+}
+
+
+.tarja-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #161b22;
+  color: white;
+}
+
+.tarja-header {
+  background-color: transparent;
+  padding: 10px;
+  border-left: 5px solid yellow;
+  border-radius: 5px;
+}
+
+.tarja-container.tarja-vermelha .tarja-header {
+  border-left-color: red;
+}
+
+.tarja-container.tarja-preta .tarja-header {
+  border-left-color: black;
+}
+
+.tarja-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 80%;
+  max-width: 500px;
+}
+
+.tarja-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #1c1f26;
+  color: white;
+  font-size: 16px;
+  outline: none;
+}
+
+.tarja-form input:focus {
+  border-color: #238636;
+  outline: 2px solid #238636;
+}
+
+.tarja-form button {
+  background-color: #238636;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.tarja-form button:hover {
+  background-color: #2ea043;
+}
+
+.back-button {
+  background-color: #d72638;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #c71e30;
+}
+
+.back-button:active {
+  background-color: #a11927;
+}
+.relatorio-container {
+  width: 636px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #161b22;
+  color: white;
+  height: 100vh;
+}
+
+.relatorio-header {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.filtro-container input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #2ea043;
+  background-color: #1c1f26;
+  color: white;
+  font-size: 16px;
+  width: 200px;
+}
+
+.pedidos-container {
+  width: 80%;
+  max-width: 800px;
+  overflow-y: scroll;
+  max-height: 400px;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #238636;
+}
+
+tr {
+  border-bottom: 1px solid #ccc;
+}
+
+tr:hover {
+  background-color: #2ea043;
+}

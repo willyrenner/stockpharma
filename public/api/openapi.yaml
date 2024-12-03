@@ -2,8 +2,8 @@ openapi: '3.0.1'
 info:
   title: Cadastro de Medicamentos
   description: >
-    Gerenciador de estoque de medicamentos em farmacia.
-  version: '0.1'
+    Gerenciador de estoque de medicamentos em farmácia.
+  version: '0.2'
 servers:
   - url: http://{host}:{porta}/api
     variables:
@@ -18,6 +18,27 @@ paths:
       responses:
         200:
           description: Lista de medicamentos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    nome:
+                      type: string
+                    laboratorio:
+                      type: string
+                    fornecedor:
+                      type: string
+                    medida:
+                      type: string
+                    quantidade:
+                      type: integer
+                    mg:
+                      type: integer
     
     post:
       summary: Criar um medicamento
@@ -40,10 +61,18 @@ paths:
                   type: string
                   description: Nome do fornecedor.
                   example: Drogaria Center Cruzeta
-                unidade_medida:
+                medida:
                   type: string
-                  description: Unidade de medida do medicamento em miligramas.
-                  example: 1000mg
+                  description: Tipo da unidade de medida (caixa, frasco, cartela).
+                  example: caixa
+                quantidade:
+                  type: integer
+                  description: Quantidade de unidades na medida.
+                  example: 20
+                mg:
+                  type: integer
+                  description: Quantidade em miligramas por unidade.
+                  example: 500
       responses:
         201:
           description: Medicamento criado
@@ -83,8 +112,12 @@ paths:
                     type: string
                   fornecedor:
                     type: string
-                  unidade_medida:
+                  medida:
                     type: string
+                  quantidade:
+                    type: integer
+                  mg:
+                    type: integer
         404:
           description: Não encontrado.
           
@@ -117,10 +150,18 @@ paths:
                   type: string
                   description: Nome do fornecedor.
                   example: Drogaria Center Cruzeta
-                unidade_medida:
+                medida:
                   type: string
-                  description: Unidade de medida do medicamento em miligramas.
-                  example: 2,5mg
+                  description: Tipo da unidade de medida (caixa, frasco, cartela).
+                  example: cartela
+                quantidade:
+                  type: integer
+                  description: Quantidade de unidades na medida.
+                  example: 15
+                mg:
+                  type: integer
+                  description: Quantidade em miligramas por unidade.
+                  example: 2.5
       responses:
         200:
           description: Medicamento atualizado

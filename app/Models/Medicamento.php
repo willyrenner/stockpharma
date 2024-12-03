@@ -10,6 +10,7 @@ class Medicamento extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nome', 'laboratorio', 'fornecedor', 'unidade_medida'
+        'nome', 'laboratorio', 'fornecedor', 'medida', 'quantidade', 'miligramas'
     ];
+
 }

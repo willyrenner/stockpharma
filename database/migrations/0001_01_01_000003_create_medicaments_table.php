@@ -18,9 +18,11 @@ return new class extends Migration
             $table->timestamps();
             
             $table->string('nome');
-            $table->string('laboratorio');
             $table->string('fornecedor');
-            $table->string('unidade_medida');
+            $table->string('laboratorio');
+            $table->string('medida');
+            $table->string('quantidade');
+            $table->string('miligramas');
         });
     }
 

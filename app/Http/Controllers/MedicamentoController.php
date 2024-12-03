@@ -29,13 +29,17 @@ class MedicamentoController extends Controller
         $nome = $request->input('nome');
         $laboratorio = $request->input('laboratorio');
         $fornecedor = $request->input('fornecedor');
-        $unidade_medida = $request->input('unidade_medida');
+        $medida = $request->input('medida');
+        $quantidade = $request->input('quantidade');
+        $miligramas = $request->input('miligramas');
         
         $medicamento = Medicamento::create([
             'nome' => $nome,
             'laboratorio' => $laboratorio,
             'fornecedor' => $fornecedor,
-            'unidade_medida' => $unidade_medida
+            'medida' => $medida,
+            'quantidade' => $quantidade,
+            'miligramas' => $miligramas
         ]);
         
         $id = $medicamento->id;
