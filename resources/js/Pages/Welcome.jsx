@@ -1,17 +1,22 @@
 import { useEffect } from "react";
-import { Head, Link } from "@inertiajs/react";
-import { CLIENT_ID, REDIRECT_URI, SUAP_URL, SCOPE } from '../settings';
-import { SuapClient } from '../client';
-import Cookies from '../js.cookie';
+import { Head, Link, usePage } from "@inertiajs/react";
+import { CLIENT_ID, REDIRECT_URI, SUAP_URL, SCOPE } from "../settings";
+import { SuapClient } from "../client";
 
 const Welcome = () => {
+  const { auth } = usePage().props; // Acessa as propriedades do usuário autenticado
   const suapClient = new SuapClient(SUAP_URL, CLIENT_ID, REDIRECT_URI, SCOPE);
-  
+
+  useEffect(() => {
+    // Verifica se o usuário está autenticado e redireciona para o dashboard
+    if (auth?.user) {
+      window.location.href = route("dashboard");
+    }
+  }, [auth]);
+
   const handleSuapLogin = () => {
     suapClient.init();
     suapClient.login();
-
-    
   };
 
   return (
@@ -23,9 +28,7 @@ const Welcome = () => {
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               StockPharma
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
-              Seja Bem-Vindo
-            </p>
+            <p className="text-gray-600 dark:text-gray-400">Seja Bem-Vindo</p>
           </div>
 
           <div className="flex flex-col space-y-4">

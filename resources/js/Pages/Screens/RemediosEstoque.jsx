@@ -1,63 +1,107 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Head, Link } from "@inertiajs/react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-const RemediosEstoque = ({ navigate }) => {
-  const remedios = [
-    { id: 1, nome: "Paracetamol", tarja: "Amarela", quantidade: 100 },
-    { id: 2, nome: "Ibuprofeno", tarja: "Vermelha", quantidade: 150 },
-    { id: 3, nome: "Amoxicilina", tarja: "Preta", quantidade: 80 },
-    { id: 4, nome: "Dipirona", tarja: "Amarela", quantidade: 120 },
-    { id: 5, nome: "Cefalexina", tarja: "Vermelha", quantidade: 200 },
-    { id: 6, nome: "Cloridrato de Metformina", tarja: "Preta", quantidade: 50 },
-    { id: 7, nome: "Loratadina", tarja: "Amarela", quantidade: 300 },
-    { id: 8, nome: "Cetoconazol", tarja: "Vermelha", quantidade: 90 },
-    { id: 9, nome: "Omeprazol", tarja: "Preta", quantidade: 60 },
-    { id: 10, nome: "Simvastatina", tarja: "Amarela", quantidade: 110 },
-  ];
+const RemediosEstoque = () => {
+  const [remedios, setRemedios] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("/api/medicamentos")
+      .then((response) => {
+        setRemedios(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar os medicamentos:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
-    <div className="relatorio-container" style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px", backgroundColor: "#161b22", color: "white", height: "100vh" }}>
-      <header className="relatorio-header" style={{ marginBottom: "20px", fontSize: "24px" }}>
-        <h1>Remédios em Estoque</h1>
-      </header>
-
-      <div className="remedios-container" style={{ width: "80%", maxWidth: "800px", overflowY: "scroll", maxHeight: "400px" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr style={{ borderBottom: "2px solid #238636" }}>
-              <th style={{ padding: "10px", textAlign: "left" }}>Remédio</th>
-              <th style={{ padding: "10px", textAlign: "left" }}>Tarja</th>
-              <th style={{ padding: "10px", textAlign: "left" }}>Quantidade</th>
-            </tr>
-          </thead>
-          <tbody>
-            {remedios.map((remedio) => (
-              <tr key={remedio.id} style={{ borderBottom: "1px solid #ccc" }}>
-                <td style={{ padding: "10px" }}>{remedio.nome}</td>
-                <td style={{ padding: "10px" }}>{remedio.tarja}</td>
-                <td style={{ padding: "10px" }}>{remedio.quantidade}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <AuthenticatedLayout
+      header={
+        <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+          StockPharma - Remédios em Estoque
+        </h2>
+      }
+    >
+      <Head title="Remédios em Estoque" />
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-6">
+        <div className="container mx-auto px-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h1 className="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-gray-200">
+              Lista de Remédios
+            </h1>
+            {loading ? (
+              <p className="text-center text-gray-600 dark:text-gray-400">Carregando...</p>
+            ) : (
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-gray-100 dark:bg-gray-700">
+                    <th className="px-4 py-2 text-left text-gray-800 dark:text-gray-200">
+                      Nome
+                    </th>
+                    <th className="px-4 py-2 text-left text-gray-800 dark:text-gray-200">
+                      Tarja
+                    </th>
+                    <th className="px-4 py-2 text-left text-gray-800 dark:text-gray-200">
+                      Quantidade
+                    </th>
+                    <th className="px-4 py-2 text-left text-gray-800 dark:text-gray-200">
+                      Fornecedor
+                    </th>
+                    <th className="px-4 py-2 text-left text-gray-800 dark:text-gray-200">
+                      Laboratório
+                    </th>
+                    <th className="px-4 py-2 text-left text-gray-800 dark:text-gray-200">
+                      Miligramas
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {remedios.map((remedio) => (
+                    <tr
+                      key={remedio.id}
+                      className="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <td className="px-4 py-2 text-gray-800 dark:text-gray-200">
+                        {remedio.nome}
+                      </td>
+                      <td className="px-4 py-2 text-gray-800 dark:text-gray-200">
+                        {remedio.tarja}
+                      </td>
+                      <td className="px-4 py-2 text-gray-800 dark:text-gray-200">
+                        {remedio.quantidade}
+                      </td>
+                      <td className="px-4 py-2 text-gray-800 dark:text-gray-200">
+                        {remedio.fornecedor}
+                      </td>
+                      <td className="px-4 py-2 text-gray-800 dark:text-gray-200">
+                        {remedio.laboratorio}
+                      </td>
+                      <td className="px-4 py-2 text-gray-800 dark:text-gray-200">
+                        {remedio.miligramas}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            <div className="mt-4">
+              <Link
+                href={route("dashboard")}
+                className="inline-block py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Voltar
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <button
-        onClick={() => navigate("dashboard")}
-        className="back-button"
-        style={{
-          marginTop: "20px",
-          width: "120px",
-          padding: "10px",
-          backgroundColor: "#d72638",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Voltar
-      </button>
-    </div>
+    </AuthenticatedLayout>
   );
 };
 

@@ -1,198 +1,119 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { Head, Link } from "@inertiajs/react";
 
-const RemoverRemedio = ({ navigate }) => {
-  // Dados de remédios de diferentes tarjas
-  const remedios = {
-    amarela: [
-      { id: 1, nome: "Paracetamol", tarja: "Amarela" },
-      { id: 2, nome: "Dipirona", tarja: "Amarela" },
-      { id: 3, nome: "Ibuprofeno", tarja: "Amarela" },
-      { id: 4, nome: "Loratadina", tarja: "Amarela" },
-      { id: 5, nome: "Cefalexina", tarja: "Amarela" },
-      { id: 6, nome: "Omeprazol", tarja: "Amarela" },
-      { id: 7, nome: "Simvastatina", tarja: "Amarela" },
-      { id: 8, nome: "Amoxicilina", tarja: "Amarela" },
-      { id: 9, nome: "Cloridrato de Metformina", tarja: "Amarela" },
-      { id: 10, nome: "Dipirona", tarja: "Amarela" },
-    ],
-    vermelha: [
-      { id: 1, nome: "Ibuprofeno", tarja: "Vermelha" },
-      { id: 2, nome: "Cetoconazol", tarja: "Vermelha" },
-      { id: 3, nome: "Cefalexina", tarja: "Vermelha" },
-      { id: 4, nome: "Cetoconazol", tarja: "Vermelha" },
-      { id: 5, nome: "Dipirona", tarja: "Vermelha" },
-      { id: 6, nome: "Paracetamol", tarja: "Vermelha" },
-      { id: 7, nome: "Ibuprofeno", tarja: "Vermelha" },
-      { id: 8, nome: "Loratadina", tarja: "Vermelha" },
-      { id: 9, nome: "Simvastatina", tarja: "Vermelha" },
-      { id: 10, nome: "Amoxicilina", tarja: "Vermelha" },
-    ],
-    preta: [
-      { id: 1, nome: "Amoxicilina", tarja: "Preta" },
-      { id: 2, nome: "Metformina", tarja: "Preta" },
-      { id: 3, nome: "Cloridrato de Metformina", tarja: "Preta" },
-      { id: 4, nome: "Cefalexina", tarja: "Preta" },
-      { id: 5, nome: "Dipirona", tarja: "Preta" },
-      { id: 6, nome: "Simvastatina", tarja: "Preta" },
-      { id: 7, nome: "Paracetamol", tarja: "Preta" },
-      { id: 8, nome: "Omeprazol", tarja: "Preta" },
-      { id: 9, nome: "Ibuprofeno", tarja: "Preta" },
-      { id: 10, nome: "Cetoconazol", tarja: "Preta" },
-    ],
-  };
-
-  // Estado para armazenar a tarja selecionada, remédios e erro de não encontrado
+const RemoverRemedio = () => {
+  const [remedios, setRemedios] = useState([]);
+  const [remediosFiltrados, setRemediosFiltrados] = useState([]);
   const [selectedTarja, setSelectedTarja] = useState("");
-  const [remediosDisponiveis, setRemediosDisponiveis] = useState([]);
-  const [remedioSelecionado, setRemedioSelecionado] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const fetchMedicamentos = async () => {
+      try {
+        const response = await axios.get("/api/medicamentos");
+        setRemedios(response.data);
+        setRemediosFiltrados(response.data);
+      } catch (error) {
+        console.error("Erro ao carregar remédios:", error);
+      }
+    };
+    fetchMedicamentos();
+  }, []);
 
   const handleTarjaChange = (e) => {
     const tarjaSelecionada = e.target.value;
     setSelectedTarja(tarjaSelecionada);
+
     if (tarjaSelecionada) {
-      setRemediosDisponiveis(remedios[tarjaSelecionada]);
-      setErrorMessage(""); // Limpa a mensagem de erro
+      const filtrados = remedios.filter(
+        (remedio) => remedio.tarja && remedio.tarja.toLowerCase() === tarjaSelecionada.toLowerCase()
+      );
+      setRemediosFiltrados(filtrados);
     } else {
-      setRemediosDisponiveis([]);
+      setRemediosFiltrados(remedios);
     }
   };
 
-  const handleRemedioSelect = (e) => {
-    setRemedioSelecionado(e.target.value);
-  };
-
-  const handleRemover = () => {
-    if (!remedioSelecionado) {
-      setErrorMessage("Selecione um remédio para remover.");
-      return;
-    }
-
-    const isRemedioValido = remediosDisponiveis.some(
-      (remedio) => remedio.nome === remedioSelecionado
-    );
-
-    if (isRemedioValido) {
-      setErrorMessage("");
-      alert(`Remédio ${remedioSelecionado} removido com sucesso!`);
-    } else {
-      setErrorMessage("Este remédio não está cadastrado.");
+  const handleRemover = async (id) => {
+    try {
+      const response = await axios.delete(`/api/medicamentos/${id}`);
+      if (response.status === 200) {
+        setRemedios((prevRemedios) => prevRemedios.filter((remedio) => remedio.id !== id));
+        setRemediosFiltrados((prevFiltrados) => prevFiltrados.filter((remedio) => remedio.id !== id));
+        alert("Remédio removido com sucesso!");
+      }
+    } catch (error) {
+      console.error("Erro ao remover remédio:", error);
+      setErrorMessage("Erro ao remover o remédio.");
     }
   };
 
   return (
-    <div
-      className="remover-container"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "20px",
-        backgroundColor: "#161b22",
-        color: "white",
-        height: "100vh",
-      }}
+    <AuthenticatedLayout
+      header={
+        <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+          StockPharma - Remover Medicamento
+        </h2>
+      }
     >
-      <header className="remover-header" style={{ marginBottom: "20px", fontSize: "24px" }}>
-        <h1>Remover Remédio</h1>
-      </header>
+      <Head title="Remover Medicamento" />
 
-      <div className="tarja-selector" style={{ marginBottom: "20px" }}>
-        <label htmlFor="tarja">Selecione a Tarja:</label>
-        <select
-          id="tarja"
-          value={selectedTarja}
-          onChange={handleTarjaChange}
-          style={{
-            padding: "10px",
-            borderRadius: "5px",
-            border: "1px solid #2ea043",
-            backgroundColor: "#1c1f26",
-            color: "white",
-            fontSize: "16px",
-            width: "200px",
-          }}
-        >
-          <option value="">Selecione</option>
-          <option value="amarela">Amarela</option>
-          <option value="vermelha">Vermelha</option>
-          <option value="preta">Preta</option>
-        </select>
-      </div>
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md">
+          <h1 className="text-2xl font-bold mb-4 text-center text-white bg-red-600">
+            Remover Medicamento
+          </h1>
 
-      <div className="remedios-list" style={{ marginBottom: "20px", width: "80%", maxWidth: "800px" }}>
-        {remediosDisponiveis.length > 0 && (
-          <>
-            <label htmlFor="remedio">Selecione o Remédio:</label>
+          <div className="mb-4">
+            <label htmlFor="tarja" className="block text-gray-700 dark:text-gray-300">
+              Selecione a Tarja:
+            </label>
             <select
-              id="remedio"
-              value={remedioSelecionado}
-              onChange={handleRemedioSelect}
-              style={{
-                padding: "10px",
-                borderRadius: "5px",
-                border: "1px solid #2ea043",
-                backgroundColor: "#1c1f26",
-                color: "white",
-                fontSize: "16px",
-                width: "200px",
-              }}
+              id="tarja"
+              value={selectedTarja}
+              onChange={handleTarjaChange}
+              className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
             >
-              <option value="">Selecione</option>
-              {remediosDisponiveis.map((remedio) => (
-                <option key={remedio.id} value={remedio.nome}>
-                  {remedio.nome}
-                </option>
-              ))}
+              <option value="">Todos</option>
+              <option value="amarela">Amarela</option>
+              <option value="vermelha">Vermelha</option>
+              <option value="preta">Preta</option>
             </select>
-          </>
-        )}
+          </div>
+
+          <div>
+            {remediosFiltrados.length > 0 ? (
+              <ul className="space-y-2">
+                {remediosFiltrados.map((remedio) => (
+                  <li key={remedio.id} className="flex justify-between items-center p-2 bg-gray-200 rounded shadow">
+                    <span>{remedio.nome}</span>
+                    <button
+                      onClick={() => handleRemover(remedio.id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      Remover
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-center text-red-500">Nenhum remédio encontrado para a tarja selecionada.</p>
+            )}
+          </div>
+
+          {errorMessage && <p className="text-center text-red-500 mt-2">{errorMessage}</p>}
+
+          <Link
+            href="/dashboard"
+            className="w-full mt-4 py-2 px-4 bg-green-600 text-white rounded hover:bg-green-700 block text-center"
+          >
+            Voltar para o Dashboard
+          </Link>
+        </div>
       </div>
-
-      <button
-        onClick={handleRemover}
-        style={{
-          width: "123px",
-          padding: "10px",
-          backgroundColor: "#d72638",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Remover
-      </button>
-
-      {errorMessage && (
-        <p
-          style={{
-            color: "#d72638",
-            marginTop: "20px",
-            fontWeight: "bold",
-          }}
-        >
-          {errorMessage}
-        </p>
-      )}
-
-      <button
-        onClick={() => navigate("dashboard")}
-        className="back-button"
-        style={{
-          marginTop: "20px",
-          width: "120px",
-          padding: "10px",
-          backgroundColor: "#d72638",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Voltar
-      </button>
-    </div>
+    </AuthenticatedLayout>
   );
 };
 

@@ -51,6 +51,18 @@ Route::get('/tarjaPreta', function () {
     return Inertia::render('Screens/TarjaPreta');
 })->name('tarjaPreta');
 
+Route::get('/remediosEstoque', function () {
+    return Inertia::render('Screens/RemediosEstoque');
+})->name('remediosEstoque');
+
+Route::get('/relatorioPedidos', function () {
+    return Inertia::render('Screens/RelatorioPedidos');
+})->name('relatorioPedidos');
+
+Route::get('/removerRemedio', function () {
+    return Inertia::render('Screens/RemoverRemedio');
+})->name('removerRemedio');
+
 
 
 

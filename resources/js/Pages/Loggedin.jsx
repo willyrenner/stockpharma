@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SuapClient } from "@/client";
-// import Cookies from "js-cookie";
 
 const Loggedin = () => {
     const [settings, setSettings] = useState(null);
@@ -13,20 +12,23 @@ const Loggedin = () => {
     const [uri, setUri] = useState("");
 
     useEffect(() => {
-        // Fetch settings from Laravel API
         axios.get("/api/settings").then((res) => {
             setSettings(res.data);
+    
             const suap = new SuapClient(
                 res.data.SUAP_URL,
                 res.data.CLIENT_ID,
                 res.data.REDIRECT_URI,
                 res.data.SCOPE
             );
+    
             suap.init();
             if (suap.isAuthenticated()) {
                 setIsAuthenticated(true);
-                setToken(suap.getToken());
-                setScopes(suap.getToken().getScope());
+                setToken(suap.token); // Store the entire token instance
+                setScopes(suap.token.getScope());
+            } else {
+                suap.login(); // Trigger login if not authenticated
             }
         });
     }, []);
@@ -75,7 +77,8 @@ const Loggedin = () => {
                         </button>
                         <div>
                             <p><strong>Access Token:</strong> {token?.getValue()}</p>
-                            <p><strong>Validade:</strong> {token?.getExpirationTime()}</p>
+                            <p><strong>Validade:</strong> {token ? new Date(token.getExpirationTime()).toLocaleString() : "N/A"}</p>
+
                             <p><strong>Escopos autorizados:</strong> {scopes}</p>
                         </div>
 
