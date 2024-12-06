@@ -16,7 +16,6 @@ const Dashboard = () => {
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
-            {/* Título do Dashboard */}
             <h1 className="text-3xl font-semibold text-center text-gray-800 dark:text-gray-100 mb-4">
               Bem-vindo ao StockPharma!
             </h1>
@@ -24,7 +23,6 @@ const Dashboard = () => {
               Escolha uma das opções abaixo para começar:
             </p>
 
-            {/* Botões do Dashboard */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Link
                 href={route("cadastrarremedios")}

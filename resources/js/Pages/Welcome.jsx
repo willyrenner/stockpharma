@@ -14,7 +14,6 @@ const Welcome = () => {
   }, [auth]);
 
   const handleSuapLogin = () => {
-    suapClient.init();
     suapClient.login();
   };
 

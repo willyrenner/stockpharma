@@ -24,11 +24,7 @@ Route::get('/loggedin', function () {
     return Inertia::render('Loggedin');
 })->name('loggedin');
 
-Route::POST('/api/handle-suap-callback', [AuthenticatedSessionController::class, 'handleSuapCallback']);
-
-// Route::get('/loggedin', function () {
-//     return view('Loggedin');
-// })->name('loggedin');
+Route::post('/api/handle-suap-callback', [AuthenticatedSessionController::class, 'handleSuapCallback']);
 
 Route::get('/cadastrarremedios', function () {
     return Inertia::render('Screens/CadastrarRemedios');

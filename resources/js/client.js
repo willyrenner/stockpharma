@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 class Token {
   constructor(value, expirationTimeInSeconds, scope) {
     this.value = value || Cookies.get('suapToken');

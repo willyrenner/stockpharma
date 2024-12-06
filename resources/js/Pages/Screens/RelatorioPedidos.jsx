@@ -50,6 +50,8 @@ const RelatorioPedidos = () => {
     };
     fetchMedicamentos();
     fetchMedicamentosRemovidos();
+
+    
   }, []);
 
   const handleFilterChange = (e) => {
@@ -249,12 +251,19 @@ const RelatorioPedidos = () => {
                       {med.tarja}
                     </td>
                     <td className="border-t p-4 text-gray-700 dark:text-gray-300">
-                      {new Date(med.removido_em).toLocaleString()}
+                      {new Date(med.created_at).toLocaleString()}
                     </td>
                   </tr>
                 ))}
+                
               </tbody>
             </table>
+            <Link
+                href={route('dashboard')}
+                className="w-full mt-4 py-2 px-4 bg-green-600 text-white rounded hover:bg-green-700 block text-center"
+              >
+                Voltar
+              </Link>
           </div>
         </div>
       </div>

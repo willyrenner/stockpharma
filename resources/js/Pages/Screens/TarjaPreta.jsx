@@ -52,7 +52,7 @@ const TarjaPreta = () => {
           </h2>
         }
       >
-        <Head title="Cadastro de Medicamento" />
+        <Head title="Tarja Preta" />
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md">
             <h1 className="text-2xl font-bold mb-4 text-center text-white bg-black">

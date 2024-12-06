@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // Certifique-se de importar o axios
 
 const DisplayToken = () => {
   const [token, setToken] = useState('');
@@ -11,25 +12,23 @@ const DisplayToken = () => {
     const params = new URLSearchParams(hash.replace('#', '?')); // Substitui "#" por "?" para usar URLSearchParams
     const accessToken = params.get('access_token'); // Extrai o token
 
-    // Se o token existir, armazene no estado
+    // Se o token existir, armazene no estado e envie para o backend
     if (accessToken) {
       setToken(accessToken);
-      axios.post('/api/handle-suap-callback', { token: accessToken })
-      .then(response => {
-        console.log('Token enviado e usuário autenticado');
-      })
-      .catch(error => {
-        console.error('Erro ao enviar token para o backend', error);
-      });
-  }
-}, []);
+      axios.post('http://localhost:8000/api/handle-suap-callback', { token: accessToken })
+        .then(response => {
+          console.log('Token enviado e usuário autenticado');
+          window.location.href = '/dashboard';
+        })
+        .catch(error => {
+          console.error('Erro ao enviar token para o backend', error);
+        });
+    }
 
-  return (
-    <div>
-      <h1>Token de Acesso</h1>
-      <p>{token ? token : 'Nenhum token encontrado.'}</p>
-    </div>
-  );
+    
+  }, []);
+
+
 };
 
 export default DisplayToken;

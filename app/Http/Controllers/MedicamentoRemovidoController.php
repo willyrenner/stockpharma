@@ -32,4 +32,15 @@ class MedicamentoRemovidoController extends Controller
 
         return response()->json($medicamento, 201);
     }
+
+    public function show($id)
+    {
+        $medicamento = MedicamentoRemovido::find($id);
+
+        if (!$medicamento) {
+            return response()->json(['message' => 'Medicamento não encontrado.'], 404);
+        }
+
+        return response()->json($medicamento);
+    }
 }

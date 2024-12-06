@@ -41,7 +41,6 @@ paths:
                       type: integer
                     tarja:
                       type: string
-    
     post:
       summary: Criar um medicamento
       requestBody:
@@ -77,7 +76,7 @@ paths:
                   example: 500
                 tarja:
                   type: string
-                  description: Tarja do médicamento.
+                  description: Tarja do medicamento.
                   example: Preta
       responses:
         201:
@@ -92,7 +91,6 @@ paths:
                     description: URI do novo recurso criado.
         400:
           description: Requisição inválida
-    
   /medicamentos/{id}:
     parameters:
       - name: id
@@ -128,7 +126,6 @@ paths:
                     type: string
         404:
           description: Não encontrado.
-          
     delete:
       summary: Apagar um medicamento
       responses:
@@ -136,7 +133,6 @@ paths:
           description: Medicamento apagado
         404:
           description: Não encontrado.
-      
     put:
       summary: Atualizar um medicamento
       requestBody:
@@ -172,10 +168,82 @@ paths:
                   example: 2.5
                 tarja:
                   type: string
-                  description: Tarja do médicamento.
+                  description: Tarja do medicamento.
                   example: Preta
       responses:
         200:
           description: Medicamento atualizado
+        404:
+          description: Não encontrado.
+  /medicamentos_removidos:
+    get:
+      summary: Listar medicamentos removidos
+      responses:
+        200:
+          description: Lista de medicamentos removidos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    nome:
+                      type: string
+                    laboratorio:
+                      type: string
+                    fornecedor:
+                      type: string
+                    medida:
+                      type: string
+                    quantidade:
+                      type: integer
+                    miligramas:
+                      type: integer
+                    tarja:
+                      type: string
+                    removido_em:
+                      type: string
+                      format: date-time
+                      description: Data e hora da remoção
+                      example: '2024-12-06T14:30:00Z'
+  /medicamentos_removidos/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Obter um medicamento removido
+      responses:
+        200:
+          description: Medicamento encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  nome:
+                    type: string
+                  laboratorio:
+                    type: string
+                  fornecedor:
+                    type: string
+                  medida:
+                    type: string
+                  quantidade:
+                    type: integer
+                  miligramas:
+                    type: integer
+                  tarja:
+                    type: string
+                  removido_em:
+                    type: string
+                    format: date-time
         404:
           description: Não encontrado.

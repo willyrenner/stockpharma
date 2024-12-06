@@ -42,7 +42,7 @@ const RemoverRemedio = () => {
       if (remedioParaRemover) {
         await axios.post('/api/medicamentos_removidos', {
           ...remedioParaRemover,
-          removido_em: new Date().toISOString(),
+          removido_em: remedioParaRemover.created_at
         });
         const response = await axios.delete(`/api/medicamentos/${id}`);
         if (response.status === 200) {
@@ -56,8 +56,6 @@ const RemoverRemedio = () => {
       setErrorMessage("Erro ao remover o remédio.");
     }
   };
-  
-  
 
   return (
     <AuthenticatedLayout
@@ -69,7 +67,7 @@ const RemoverRemedio = () => {
     >
       <Head title="Remover Medicamento" />
 
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md">
           <h1 className="text-2xl font-bold mb-4 text-center text-white bg-red-600">
             Remover Medicamento
@@ -96,11 +94,11 @@ const RemoverRemedio = () => {
             {remediosFiltrados.length > 0 ? (
               <ul className="space-y-2">
                 {remediosFiltrados.map((remedio) => (
-                  <li key={remedio.id} className="flex justify-between items-center p-2 bg-gray-200 rounded shadow">
-                    <span>{remedio.nome}</span>
+                  <li key={remedio.id} className="flex justify-between items-center p-2 bg-gray-200 dark:bg-gray-700 rounded shadow">
+                    <span className="text-gray-800 dark:text-gray-200">{remedio.nome}</span>
                     <button
                       onClick={() => handleRemover(remedio.id)}
-                      className="text-red-600 hover:text-red-800"
+                      className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-600"
                     >
                       Remover
                     </button>
