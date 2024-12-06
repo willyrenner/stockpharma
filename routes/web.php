@@ -20,11 +20,15 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-// Route::get('/loggedin', function () {
-//     return Inertia::render('Loggedin');
-// })->name('loggedin');
+Route::get('/loggedin', function () {
+    return Inertia::render('Loggedin');
+})->name('loggedin');
 
-Route::get('/loggedin', [AuthenticatedSessionController::class, 'handleSuapCallback']);
+Route::POST('/api/handle-suap-callback', [AuthenticatedSessionController::class, 'handleSuapCallback']);
+
+// Route::get('/loggedin', function () {
+//     return view('Loggedin');
+// })->name('loggedin');
 
 Route::get('/cadastrarremedios', function () {
     return Inertia::render('Screens/CadastrarRemedios');
