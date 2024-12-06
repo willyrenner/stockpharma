@@ -26,7 +26,6 @@ Route::get('/dashboard', function () {
 
 Route::get('/loggedin', [AuthenticatedSessionController::class, 'handleSuapCallback']);
 
-
 Route::get('/cadastrarremedios', function () {
     return Inertia::render('Screens/CadastrarRemedios');
 })->name('cadastrarremedios');

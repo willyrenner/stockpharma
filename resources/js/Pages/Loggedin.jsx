@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
 import { SuapClient } from "@/client";
 
@@ -11,26 +12,30 @@ const Loggedin = () => {
     const [uriResponse, setUriResponse] = useState(null);
     const [uri, setUri] = useState("");
 
+    const location = useLocation();  // Hook para acessar a URL
+    const history = useHistory();    // Hook para redirecionamento (se necessário)
+
+    // Pega os parâmetros de query da URL
+    const queryParams = new URLSearchParams(location.search);
+    const tokenFromUrl = queryParams.get("token"); // Exemplo de parâmetro da URL
+
     useEffect(() => {
-        axios.get("/api/settings").then((res) => {
-            setSettings(res.data);
-    
-            const suap = new SuapClient(
-                res.data.SUAP_URL,
-                res.data.CLIENT_ID,
-                res.data.REDIRECT_URI,
-                res.data.SCOPE
-            );
-    
-            suap.init();
-            if (suap.isAuthenticated()) {
-                setIsAuthenticated(true);
-                setToken(suap.token); // Store the entire token instance
-                setScopes(suap.token.getScope());
-            } else {
-                suap.login(); // Trigger login if not authenticated
-            }
-        });
+        if (tokenFromUrl) {
+            // Enviar o token para o controlador
+            axios
+                .post("/api/controlador", { token: tokenFromUrl })
+                .then((response) => {
+                    console.log("Token enviado para o controlador com sucesso:", response.data);
+                    setToken(response.data.token); // Armazena o token no estado, se necessário
+                })
+                .catch((error) => {
+                    console.error("Erro ao enviar o token para o controlador:", error);
+                });
+        }
+    }, [tokenFromUrl]);
+
+    useEffect(() => {
+        console.log("URL Atual:", window.location.href); // Para verificar a URL completa
     }, []);
 
     const handleLogout = () => {
@@ -78,7 +83,6 @@ const Loggedin = () => {
                         <div>
                             <p><strong>Access Token:</strong> {token?.getValue()}</p>
                             <p><strong>Validade:</strong> {token ? new Date(token.getExpirationTime()).toLocaleString() : "N/A"}</p>
-
                             <p><strong>Escopos autorizados:</strong> {scopes}</p>
                         </div>
 
