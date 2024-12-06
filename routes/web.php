@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 
 Route::get('/', function () {
@@ -19,9 +20,12 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::get('/loggedin', function () {
-    return Inertia::render('Loggedin');
-})->name('loggedin');
+// Route::get('/loggedin', function () {
+//     return Inertia::render('Loggedin');
+// })->name('loggedin');
+
+Route::get('/loggedin', [AuthenticatedSessionController::class, 'handleSuapCallback']);
+
 
 Route::get('/cadastrarremedios', function () {
     return Inertia::render('Screens/CadastrarRemedios');

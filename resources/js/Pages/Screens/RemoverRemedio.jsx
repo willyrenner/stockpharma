@@ -38,17 +38,26 @@ const RemoverRemedio = () => {
 
   const handleRemover = async (id) => {
     try {
-      const response = await axios.delete(`/api/medicamentos/${id}`);
-      if (response.status === 200) {
-        setRemedios((prevRemedios) => prevRemedios.filter((remedio) => remedio.id !== id));
-        setRemediosFiltrados((prevFiltrados) => prevFiltrados.filter((remedio) => remedio.id !== id));
-        alert("Remédio removido com sucesso!");
+      const remedioParaRemover = remedios.find((remedio) => remedio.id === id);
+      if (remedioParaRemover) {
+        await axios.post('/api/medicamentos_removidos', {
+          ...remedioParaRemover,
+          removido_em: new Date().toISOString(),
+        });
+        const response = await axios.delete(`/api/medicamentos/${id}`);
+        if (response.status === 200) {
+          setRemedios((prevRemedios) => prevRemedios.filter((remedio) => remedio.id !== id));
+          setRemediosFiltrados((prevFiltrados) => prevFiltrados.filter((remedio) => remedio.id !== id));
+          alert("Remédio removido com sucesso!");
+        }
       }
     } catch (error) {
       console.error("Erro ao remover remédio:", error);
       setErrorMessage("Erro ao remover o remédio.");
     }
   };
+  
+  
 
   return (
     <AuthenticatedLayout

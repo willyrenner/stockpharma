@@ -2,23 +2,11 @@
 
 use App\Http\Controllers\MedicamentoController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\VerificarTokenSUAP;
+use App\Http\Controllers\MedicamentoRemovidoController;
 
 Route::apiResource('medicamentos', MedicamentoController::class);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-Route::get('/recurso-publico', function() {
-    return ['mensagem' => 'Este recurso público veio da API'];
-});
-
-
-Route::middleware(VerificarTokenSUAP::class)->get('/recurso-privado', function() {
-    return ['mensagem' => 'Este recurso privado veio da API'];
-});
+Route::apiResource('medicamentos_removidos', MedicamentoRemovidoController::class);
 
 Route::get('/settings', function () {
     return response()->json([

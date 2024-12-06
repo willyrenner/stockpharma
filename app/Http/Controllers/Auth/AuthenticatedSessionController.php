@@ -8,8 +8,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\User;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -48,5 +51,19 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function handleSuapCallback(Request $request): RedirectResponse
+    {
+        $token = $request->input('access_token');
+
+        $user = User::updateOrCreate(
+            ['email' => 'suap@escolar.ifrn.edu.br'],
+            ['name' => 'Usuário do Suap', 'password' => Hash::make('password')] // Senha aleatória
+        );
+
+        Auth::login($user);
+
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 }

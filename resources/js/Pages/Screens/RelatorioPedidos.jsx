@@ -26,6 +26,7 @@ ChartJS.register(
 
 const RelatorioPedidos = () => {
   const [medicamentos, setMedicamentos] = useState([]);
+  const [medicamentosRemovidos, setMedicamentosRemovidos] = useState([]);
   const [filteredMedicamentos, setFilteredMedicamentos] = useState([]);
   const [dateFilter, setDateFilter] = useState("");
 
@@ -39,7 +40,16 @@ const RelatorioPedidos = () => {
         console.error("Erro ao buscar medicamentos:", error);
       }
     };
+    const fetchMedicamentosRemovidos = async () => {
+      try {
+        const response = await axios.get("/api/medicamentos_removidos");
+        setMedicamentosRemovidos(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar medicamentos removidos:", error);
+      }
+    };
     fetchMedicamentos();
+    fetchMedicamentosRemovidos();
   }, []);
 
   const handleFilterChange = (e) => {
@@ -139,33 +149,112 @@ const RelatorioPedidos = () => {
                     Laboratório
                   </th>
                   <th className="text-left p-4 text-gray-700 dark:text-gray-300">
-                    Tarja
+                    Medida
                   </th>
                   <th className="text-left p-4 text-gray-700 dark:text-gray-300">
-                    Data
+                    Quantidade
+                  </th>
+                  <th className="text-left p-4 text-gray-700 dark:text-gray-300">
+                    Miligramas
+                  </th>
+                  <th className="text-left p-4 text-gray-700 dark:text-gray-300">
+                    Tarja
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {filteredMedicamentos.map((med) => (
-                  <tr key={med.id} className="border-b border-gray-200">
-                    <td className="p-4">{med.nome}</td>
-                    <td className="p-4">{med.fornecedor}</td>
-                    <td className="p-4">{med.laboratorio}</td>
-                    <td className="p-4">{med.tarja}</td>
-                    <td className="p-4">{med.created_at.split("T")[0]}</td>
+                  <tr key={med.id}>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.nome}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.fornecedor}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.laboratorio}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.medida}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.quantidade}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.miligramas}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.tarja}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div className="mt-6">
-            <Link
-              href={route("dashboard")}
-              className="py-2 px-4 bg-green-600 text-white rounded hover:bg-green-700 block text-center"
-            >
-              Voltar para o Dashboard
-            </Link>
+          <div className="overflow-x-auto mt-4">
+            <h2 className="text-xl font-bold mb-4 text-gray-700 dark:text-gray-300">
+              Medicamentos Removidos
+            </h2>
+            <table className="min-w-full bg-white dark:bg-gray-700 rounded-lg shadow-md">
+              <thead>
+                <tr>
+                  <th className="text-left p-4 text-gray-700 dark:text-gray-300">
+                    Nome
+                  </th>
+                  <th className="text-left p-4 text-gray-700 dark:text-gray-300">
+                    Fornecedor
+                  </th>
+                  <th className="text-left p-4 text-gray-700 dark:text-gray-300">
+                    Laboratório
+                  </th>
+                  <th className="text-left p-4 text-gray-700 dark:text-gray-300">
+                    Medida
+                  </th>
+                  <th className="text-left p-4 text-gray-700 dark:text-gray-300">
+                    Quantidade
+                  </th>
+                  <th className="text-left p-4 text-gray-700 dark:text-gray-300">
+                    Miligramas
+                  </th>
+                  <th className="text-left p-4 text-gray-700 dark:text-gray-300">
+                    Tarja
+                  </th>
+                  <th className="text-left p-4 text-gray-700 dark:text-gray-300">
+                    Removido em
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {medicamentosRemovidos.map((med) => (
+                  <tr key={med.id}>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.nome}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.fornecedor}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.laboratorio}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.medida}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.quantidade}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.miligramas}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {med.tarja}
+                    </td>
+                    <td className="border-t p-4 text-gray-700 dark:text-gray-300">
+                      {new Date(med.removido_em).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

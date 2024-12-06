@@ -4,11 +4,10 @@ import { CLIENT_ID, REDIRECT_URI, SUAP_URL, SCOPE } from "../settings";
 import { SuapClient } from "../client";
 
 const Welcome = () => {
-  const { auth } = usePage().props; // Acessa as propriedades do usuário autenticado
+  const { auth } = usePage().props; 
   const suapClient = new SuapClient(SUAP_URL, CLIENT_ID, REDIRECT_URI, SCOPE);
 
   useEffect(() => {
-    // Verifica se o usuário está autenticado e redireciona para o dashboard
     if (auth?.user) {
       window.location.href = route("dashboard");
     }
