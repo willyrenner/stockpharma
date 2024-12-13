@@ -1,1 +1,1 @@
-->middleware(['auth', 'verified'])
+Serviço Externo utilizado foi a API do SUAP, por mais que seja um sistema para uma farmácia (Que foi reclamado hoje na apresentação), foi um meio que a gente fez para mostrar a autenticação com um serviço externo.
