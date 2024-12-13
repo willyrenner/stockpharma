@@ -77,7 +77,7 @@ const RelatorioPedidos = () => {
       {
         label: "Quantidade por Tarja",
         data: Object.values(medicamentosPorTarja),
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+        backgroundColor: ["yellow", "red", "black", "black"],
       },
     ],
   };

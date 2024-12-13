@@ -40,23 +40,14 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 
-    /**
-     * Handle the SUAP callback to authenticate the user.
-     */
     public function handleSuapCallback(Request $request)
     {
-        // Log para verificar se a função está sendo chamada
         Log::info('handleSuapCallback foi chamado.');
 
-        // Obtém o token de acesso da requisição
         $token = $request->input('token');
 
-        
-
-        // Log para verificar o token recebido
         Log::info('Token recebido: ' . $token);
 
-        // Verifica se o token foi fornecido
         if (!$token) {
             Log::error('Token não fornecido.');
             return response()->json(['error' => 'Token não fornecido.'], 400);
@@ -71,35 +62,23 @@ class AuthenticatedSessionController extends Controller
 
             $data = json_decode($response->getBody()->getContents(), true);
 
-                $nome = isset($data['nome_usual']) ? $data['nome_usual'] : 'Nome não disponível';
-                $email = isset($data['email']) ? $data['email'] : 'E-mail não disponível';
+            $nome = isset($data['nome_usual']) ? $data['nome_usual'] : 'Nome não disponível';
+            $email = isset($data['email']) ? $data['email'] : 'E-mail não disponível';
 
-                // Cria ou atualiza o usuário no banco
-                $user = User::updateOrCreate(
-                    ['email' => $email],
-                    ['name' => $nome, 'password' => Hash::make('password')] // Senha aleatória
-                );
+            $user = User::updateOrCreate(
+                ['email' => $email],
+                ['name' => $nome, 'password' => Hash::make('password')]
+            );
 
-                // Tenta autenticar o usuário
-                Auth::login($user);
+            Auth::login($user);
 
-                // Log para confirmar que o usuário foi autenticado
-                Log::info('Usuário autenticado: ' . $user->email);
-                Log::info('Usuário autenticado: ' . $user->name);
+            Log::info('Usuário autenticado: ' . $user->email);
+            Log::info('Usuário autenticado: ' . $user->name);
 
-                // Redireciona para o painel ou área restrita
-                return redirect()->intended(route('dashboard', absolute: false));
+            // Redireciona para o painel ou área restrita
+            return redirect()->intended(route('dashboard', absolute: false));
 
-        }
-
-        
-            // Faz a requisição para a API do SUAP
-            
-
-            // Log para verificar o status da resposta
-   
-
-            
         }
     }
+}
 

@@ -53,14 +53,14 @@ const TarjaAmarela = () => {
         }
       >
         <Head title="Tarja Amarela" />
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md">
             <h1 className="text-2xl font-bold mb-4 text-center text-white-100 bg-yellow-300">
               Cadastro de Medicamento
             </h1>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-gray-700 dark:text-gray-300">
+                <label className="block text-gray-800 dark:text-gray-300">
                   Nome do Medicamento
                 </label>
                 <input
